@@ -7,6 +7,7 @@ authors = ["Jacob Fresh <jacob@fresh.com>"]
 [tool.poetry.dependencies]
 python = "^3.9"
 Django = "^3.1.7"
+gunicorn = "^20.0.4"
 
 [tool.poetry.dev-dependencies]
 
