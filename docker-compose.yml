@@ -1,0 +1,50 @@
+version: "3.7"
+services:
+  backend:
+    build:
+      context: ./backend
+    # image: "nurseiit/kindred:${GIT_COMMIT}"
+    restart: always
+    networks:
+      - kindred-network
+    # development environment
+    # ports:
+    #   - 8000:8000
+    hostname: backend
+    depends_on:
+      - postgres_db
+
+  postgres_db:
+    image: "postgres:12"
+    restart: always
+    networks:
+      - kindred-network
+    hostname: postgres_db
+    environment:
+      POSTGRES_DB: kindred_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: kindred_password
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  nginx:
+    build:
+      context: ./nginx
+    # image: "nurseiit/kindred-nginx:${GIT_COMMIT}"
+    restart: always
+    networks:
+      - kindred-network
+    ports:
+      - 80:80/tcp
+      - 443:443/tcp
+    environment:
+      CERTBOT_EMAIL: nurs@tuta.io
+    volumes:
+      - letsencrypt:/etc/letsencrypt
+
+volumes:
+  postgres-data:
+  letsencrypt:
+
+networks:
+  kindred-network:
