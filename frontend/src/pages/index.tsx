@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import { useAppSelector } from '../app/hooks';
 import { selectAuth } from '../features/auth/authSlice';
 
+import { Layout } from '../components';
+
 export default function Index() {
   const { isAuthenticated } = useAppSelector(selectAuth);
   const router = useRouter();
@@ -12,5 +14,9 @@ export default function Index() {
     if (!isAuthenticated) router.push('/login');
   }, [isAuthenticated]);
 
-  return <div>hello</div>;
+  return (
+    <Layout>
+      <div style={{ height: '200vh' }}>hello</div>
+    </Layout>
+  );
 }
