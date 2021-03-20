@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     "users",
     # external apps
     "rest_framework",
-    "rest_framework.authtoken",
 ]
 
 MIDDLEWARE = [
@@ -137,3 +136,11 @@ STATIC_URL = "/static/"
 
 # Custom user
 AUTH_USER_MODEL = "users.CustomUser"
+
+
+# rest_framework settings
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    )
+}
