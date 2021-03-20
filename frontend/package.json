@@ -16,6 +16,7 @@
   "dependencies": {
     "@geist-ui/react": "^2.1.3",
     "@reduxjs/toolkit": "^1.5.0",
+    "@styled-icons/ionicons-outline": "^10.28.0",
     "@styled-icons/material-rounded": "^10.28.0",
     "axios": "^0.21.1",
     "js-cookie": "^2.2.1",

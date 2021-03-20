@@ -19,5 +19,13 @@ export default createGlobalStyle`
 
   :root {
     --bg-1: #f3f4f6;
+
+    --accent-1: #999;
+    --accent-5: #666;
+    --accent-7: #333;
+    --accent-8: #111;
+
+    --success-1: #3291ff;
+    --success-2: #0070f3;
   }
 `;

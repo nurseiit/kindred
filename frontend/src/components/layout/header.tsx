@@ -1,7 +1,14 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 
-import { Home, Star, UnfoldMore } from '@styled-icons/material-rounded';
+import {
+  Calendar,
+  Home,
+  Image,
+  Settings,
+  Star,
+} from '@styled-icons/ionicons-outline';
+import { UnfoldMore } from '@styled-icons/material-rounded';
 
 const OptionsWrapper = styled.header`
   position: sticky;
@@ -51,11 +58,32 @@ const NavLink = styled.a<NavLinkProps>`
   font-weight: 600;
   font-size: 13px;
 
-  color: ${({ selected }) => (selected ? '#0e6df5' : '#d4d4d4')};
+  color: ${({ selected }) =>
+    selected ? 'var(--accent-8)' : 'var(--accent-1)'};
 
-  margin-bottom: 20px;
+  .icon {
+    color: ${({ selected }) =>
+      selected ? 'var(--success-1)' : 'var(--accent-5)'};
+  }
+
+  width: calc(100% + 17px);
+  height: 35px;
+  border-right: ${({ selected }) =>
+    selected ? '2px solid var(--success-2)' : 'none'};
+
+  margin-bottom: 15px;
 
   cursor: pointer;
+
+  &:hover {
+    color: ${({ selected }) =>
+      selected ? 'var(--accent-8)' : 'var(--accent-5)'};
+
+    .icon {
+      color: ${({ selected }) =>
+        selected ? 'var(--success-1)' : 'var(--accent-7)'};
+    }
+  }
 
   &:last-of-type {
     margin-bottom: 0;
@@ -63,7 +91,7 @@ const NavLink = styled.a<NavLinkProps>`
 `;
 
 const IconWrapper = styled.span`
-  margin-right: 25px;
+  margin: 0 14px;
   display: flex;
   align-items: center;
 `;
@@ -76,7 +104,9 @@ type LinkType = {
 
 const AllLinks: LinkType[] = [
   { text: 'Feed', selected: true, icon: Home },
-  { text: 'Favourites', icon: Star },
+  { text: 'Events', icon: Calendar },
+  { text: 'Photo Gallery', icon: Image },
+  { text: 'Settings', icon: Settings },
 ];
 
 const NavLinks: FC = () => (
@@ -84,7 +114,7 @@ const NavLinks: FC = () => (
     {AllLinks.map(({ text, selected, icon: LinkIcon }, idx) => (
       <NavLink selected={selected} key={`${text}-${idx}`}>
         <IconWrapper>
-          <LinkIcon height={30} width={30} />
+          <LinkIcon className="icon" height={22} width={22} />
         </IconWrapper>
         {text}
       </NavLink>
