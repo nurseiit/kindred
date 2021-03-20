@@ -10,7 +10,7 @@ export const useUser = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(requestUser());
+    if (!user && !isLoading) dispatch(requestUser());
   }, []);
 
   return { user, isLoading, error };

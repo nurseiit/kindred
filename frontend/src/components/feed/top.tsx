@@ -1,6 +1,10 @@
 import { Popover, Spacer, Link } from '@geist-ui/react';
 import { Notifications, Search } from '@styled-icons/ionicons-outline';
 import styled from 'styled-components';
+
+import { useAppDispatch } from '../../app/hooks';
+import { logout } from '../../features/auth/authSlice';
+import { useUser } from '../../utils';
 import { Emoji } from '../emoji';
 
 const Wrapper = styled.div`
@@ -47,11 +51,13 @@ const PopoverWrapper = styled.div`
   width: 200px;
 `;
 
-const ProfilePopoverContent = () => {
-  return (
+export const Top = () => {
+  const { user } = useUser();
+  const dispatch = useAppDispatch();
+  const content = (
     <PopoverWrapper>
       <Popover.Item title>
-        <span>Morgan Freeman</span>
+        <span>{[user?.first_name, user?.last_name].join(' ')}</span>
       </Popover.Item>
       <Popover.Item>
         <Link href="#">Profile</Link>
@@ -61,26 +67,25 @@ const ProfilePopoverContent = () => {
       </Popover.Item>
       <Popover.Item line />
       <Popover.Item>
-        <span>Log out</span>
+        <span onClick={() => dispatch(logout())}>Log out</span>
       </Popover.Item>
     </PopoverWrapper>
   );
+  return (
+    <Wrapper>
+      <Emoji isRoundedWhiteBg withShadow>
+        <Search className="icon" width={20} height={20} />
+      </Emoji>
+      <Spacer x={0.8} />
+      <Emoji isRoundedWhiteBg withShadow>
+        <Notifications className="icon" width={20} height={20} />
+      </Emoji>
+      <Spacer x={0.8} />
+      <Border />
+      <Spacer x={0.8} />
+      <Popover content={content} placement="bottomEnd">
+        <ProfilePhoto>🦸🏻‍♀️</ProfilePhoto>
+      </Popover>
+    </Wrapper>
+  );
 };
-
-export const Top = () => (
-  <Wrapper>
-    <Emoji isRoundedWhiteBg withShadow>
-      <Search className="icon" width={20} height={20} />
-    </Emoji>
-    <Spacer x={0.8} />
-    <Emoji isRoundedWhiteBg withShadow>
-      <Notifications className="icon" width={20} height={20} />
-    </Emoji>
-    <Spacer x={0.8} />
-    <Border />
-    <Spacer x={0.8} />
-    <Popover content={ProfilePopoverContent} placement="bottomEnd">
-      <ProfilePhoto>🦸🏻‍♀️</ProfilePhoto>
-    </Popover>
-  </Wrapper>
-);
