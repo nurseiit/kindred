@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     # local apps
     "users",
     "posts",
+    "communities",
     # external apps
     "rest_framework",
 ]
