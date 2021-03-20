@@ -1,8 +1,6 @@
 import { Popover, Spacer, Link } from '@geist-ui/react';
 import { Notifications, Search } from '@styled-icons/ionicons-outline';
 import styled from 'styled-components';
-import { useAppDispatch } from '../../app/hooks';
-import { logout } from '../../features/auth/authSlice';
 import { Emoji } from '../emoji';
 
 const Wrapper = styled.div`

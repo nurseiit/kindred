@@ -8,3 +8,4 @@ export const MONTHS_TO_STORE_A_TOKEN_COOKIE = 3;
 export const TOKEN_COOKIE_NAME = 'kindred-token';
 
 export const LOGIN_URL = '/auth/login/';
+export const PROFILE_URL = '/profile/';
