@@ -9,3 +9,4 @@ export const TOKEN_COOKIE_NAME = 'kindred-token';
 
 export const LOGIN_URL = '/auth/login/';
 export const PROFILE_URL = '/profile/';
+export const POSTS_URL = '/posts/';

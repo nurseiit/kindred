@@ -1,4 +1,4 @@
-import { IPost, IGroup } from '.';
+import { IPost, IGroup, ICommunity } from '.';
 
 export type IUser = {
   id: number;
@@ -8,4 +8,5 @@ export type IUser = {
   date_joined: string;
   groups: Array<IGroup>;
   posts: Array<IPost>;
+  communities: Array<ICommunity>;
 };
