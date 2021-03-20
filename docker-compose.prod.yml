@@ -6,6 +6,9 @@ services:
       context: ./backend
       dockerfile: Dockerfile.prod
     command: gunicorn kindred.wsgi:application --bind 0.0.0.0:8000
+    restart: always
+    networks:
+      - kindred-network
     volumes:
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
@@ -16,6 +19,9 @@ services:
 
   db:
     image: postgres:12.0-alpine
+    restart: always
+    networks:
+      - kindred-network
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
@@ -24,6 +30,8 @@ services:
   nginx:
     build: ./nginx
     restart: always
+    networks:
+      - kindred-network
     volumes:
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
@@ -41,3 +49,6 @@ volumes:
   static_volume:
   media_volume:
   letsencrypt:
+
+networks:
+  kindred-network:
