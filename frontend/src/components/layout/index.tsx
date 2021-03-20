@@ -8,7 +8,7 @@ const Wrapper = styled.div`
 
 const MainWrapper = styled.div`
   flex-grow: 1;
-  background: rgba(242, 247, 255, 0.8);
+  background-color: var(--bg-1);
   padding: 20px 20px;
 `;
 
