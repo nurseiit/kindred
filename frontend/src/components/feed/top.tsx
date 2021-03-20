@@ -50,7 +50,6 @@ const PopoverWrapper = styled.div`
 `;
 
 const ProfilePopoverContent = () => {
-  const dispatch = useAppDispatch();
   return (
     <PopoverWrapper>
       <Popover.Item title>
@@ -64,9 +63,7 @@ const ProfilePopoverContent = () => {
       </Popover.Item>
       <Popover.Item line />
       <Popover.Item>
-        <Link href="#" onClick={() => dispatch(logout())}>
-          Log out
-        </Link>
+        <span>Log out</span>
       </Popover.Item>
     </PopoverWrapper>
   );

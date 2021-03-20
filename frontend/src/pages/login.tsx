@@ -1,21 +1,45 @@
-import { Button } from '@geist-ui/react';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { Button, Input } from '@geist-ui/react';
+
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { login, logout, selectAuth } from '../features/auth/authSlice';
+import { requestLogin, selectAuth } from '../features/auth/authSlice';
 
 export default function Login() {
-  const { isAuthenticated } = useAppSelector(selectAuth);
+  const router = useRouter();
+  const {
+    isAuthenticated,
+    loginRequest: { isLoading },
+  } = useAppSelector(selectAuth);
   const dispatch = useAppDispatch();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    if (isAuthenticated) router.push('/');
+  }, [isAuthenticated]);
+
   return (
     <div>
-      {!isAuthenticated && (
-        <>
-          <h1>hello!</h1>
-          <Button onClick={() => dispatch(login('random-token'))}>login</Button>
-        </>
-      )}
-      {isAuthenticated && (
-        <Button onClick={() => dispatch(logout())}>logout</Button>
-      )}
+      <Input
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Enter username"
+      />
+      <Input.Password
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Enter password"
+      />
+      <Button
+        loading={isLoading}
+        auto
+        type="success"
+        size="small"
+        onClick={() => dispatch(requestLogin({ email, password }))}
+      >
+        login
+      </Button>
     </div>
   );
 }

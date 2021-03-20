@@ -26,9 +26,7 @@ export const Feed = () => (
       <div>
         <Title>Hello Daniel</Title>
         <Subtitle>
-          {Math.random() < 0.5
-            ? "What's new with you and your family?"
-            : "Anything you'd like to share with your Kindred?"}
+          Anything you&apos;d like to share with your Kindred?
           <Emoji>☺️</Emoji>
         </Subtitle>
       </div>
