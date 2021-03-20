@@ -29,7 +29,6 @@ class CommunityViewSet(viewsets.ModelViewSet):
                     invite_code=serializer.validated_data["invite_code"]
                 )
             except (ObjectDoesNotExist, MultipleObjectsReturned):
-
                 return Response(
                     {"error": "Invite code doesn't match."},
                     status=status.HTTP_400_BAD_REQUEST,
