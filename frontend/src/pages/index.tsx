@@ -1,24 +1,22 @@
-import useSwr from 'swr';
-import Link from 'next/link';
+import styled from 'styled-components';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { selectAuth } from '../features/auth/authSlice';
+import { decrement, increment } from '../features/counter/counterSlice';
 
-import { IUser } from '../types';
-import { fetcher } from '../utils';
+const Span = styled.span`
+  color: violet;
+`;
 
 export default function Index() {
-  const { data, error } = useSwr<IUser[]>('/api/users', fetcher);
-
-  if (error) return <div>Failed to load users</div>;
-  if (!data) return <div>Loading...</div>;
-
+  const count = useAppSelector((state) => state.counter.value);
+  const { isAuthenticated } = useAppSelector(selectAuth);
+  const dispatch = useAppDispatch();
   return (
-    <ul>
-      {data.map((user) => (
-        <li key={user.id}>
-          <Link href="/user/[id]" as={`/user/${user.id}`}>
-            <a>{`User ${user.id}`}</a>
-          </Link>
-        </li>
-      ))}
-    </ul>
+    <div>
+      <h1>{isAuthenticated ? 'Helloo!' : 'please login'}</h1>
+      <Span>{count}</Span>
+      <button onClick={() => dispatch(increment())}>+</button>
+      <button onClick={() => dispatch(decrement())}>-</button>
+    </div>
   );
 }
