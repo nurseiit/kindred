@@ -1,8 +1,5 @@
-import uuid
-
 from common.serializers import InviteCodeSerializer
 from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
-from django.shortcuts import render
 from posts.serializers import PostSerializer
 from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import action
