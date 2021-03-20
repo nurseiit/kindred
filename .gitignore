@@ -2,6 +2,10 @@
 .env.prod
 .env.prod.db
 
+# Static files and media files
+staticfiles
+mediafiles
+
 # Idea
 .idea
 
