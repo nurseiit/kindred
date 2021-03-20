@@ -18,18 +18,18 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
-from users import views
+from users.views import GroupViewSet, ProfileView, UserViewSet
 
 router = routers.DefaultRouter()
-router.register(r"users", views.UserViewSet)
-router.register(r"groups", views.GroupViewSet)
+router.register(r"users", UserViewSet)
+router.register(r"groups", GroupViewSet)
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include(router.urls)),
     path("auth/", include("auth.urls")),
-    path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
+    path("profile/", ProfileView.as_view(), name="profile"),
 ]
 
 if bool(settings.DEBUG):

@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
-from rest_framework import permissions, viewsets
+from rest_framework import permissions, views, viewsets
+from rest_framework.response import Response
 
 from .serializers import GroupSerializer, UserSerializer
 
@@ -14,7 +15,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
     queryset = User.objects.all().order_by("-date_joined")
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]
 
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -24,4 +25,12 @@ class GroupViewSet(viewsets.ModelViewSet):
 
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+
+class ProfileView(views.APIView):
     permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, format=None):
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
