@@ -1,7 +1,7 @@
 {
-  "name": "kalp",
+  "name": "kindred",
   "version": "0.0.1",
-  "repository": "git@github.com:nurseiit/kalp.git",
+  "repository": "git@github.com:nurseiit/kindred.git",
   "author": "nurs@unist.ac.kr",
   "license": "MIT",
   "private": true,
@@ -14,14 +14,17 @@
     "lint": "eslint . --ext ts --ext tsx"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.5.0",
     "next": "^10.0.9",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-redux": "^7.2.2",
     "swr": "^0.5.3"
   },
   "devDependencies": {
     "@types/node": "^14.14.35",
     "@types/react": "^17.0.3",
+    "@types/react-redux": "^7.1.16",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
     "eslint": "^7.22.0",
