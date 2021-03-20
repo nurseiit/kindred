@@ -1,6 +1,7 @@
 import axios from 'axios';
-import Router from 'next/router';
-import { getTokens, removeTokens } from '../utils';
+import store from '../app/store';
+import { logout } from '../features/auth/authSlice';
+import { getTokens } from '../utils';
 import { API_BASE_URL } from './constants';
 
 const api = axios.create({ baseURL: API_BASE_URL });
@@ -24,8 +25,7 @@ api.interceptors.response.use(
   (error) => {
     if (error.response.status === 401) {
       // todo refresh
-      removeTokens();
-      Router.push('/login');
+      store.dispatch(logout());
     }
     return Promise.reject(error);
   }
