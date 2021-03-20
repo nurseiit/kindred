@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useAppSelector } from '../app/hooks';
 import { selectAuth } from '../features/auth/authSlice';
 
-import { Layout } from '../components';
+import { Feed, Layout } from '../components';
 
 export default function Index() {
   const { isAuthenticated } = useAppSelector(selectAuth);
@@ -16,7 +16,7 @@ export default function Index() {
 
   return (
     <Layout>
-      <div style={{ height: '200vh' }}>hello</div>
+      <Feed />
     </Layout>
   );
 }

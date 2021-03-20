@@ -9,6 +9,7 @@ import {
   Star,
 } from '@styled-icons/ionicons-outline';
 import { UnfoldMore } from '@styled-icons/material-rounded';
+import { Emoji } from '../emoji';
 
 const OptionsWrapper = styled.header`
   position: sticky;
@@ -154,18 +155,6 @@ const GroupsWrapper = styled.button`
   }
 `;
 
-const RoundedWhite = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 22px;
-  height: 35px;
-  width: 35px;
-  background-color: white;
-  border-radius: 50%;
-`;
-
 const GroupTitleWrapper = styled.div`
   margin-left: 10px;
   display: flex;
@@ -189,7 +178,7 @@ export const Header: FC = () => (
       <Logo /> Kindred
     </LogoWrapper>
     <GroupsWrapper>
-      <RoundedWhite>😍</RoundedWhite>
+      <Emoji isRoundedWhiteBg>😍</Emoji>
       <GroupTitleWrapper>
         <GroupTitle>Almanov Family</GroupTitle>
         this kindred
