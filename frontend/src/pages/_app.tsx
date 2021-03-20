@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { SWRConfig } from 'swr';
+import { GeistProvider, CssBaseline } from '@geist-ui/react';
 
 import store from '../app/store';
 import { TOKEN_COOKIE_NAME } from '../utils';
@@ -37,7 +38,10 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <SWRConfig value={{ fetcher: axios }}>
       <Provider store={store}>
-        <Component {...pageProps} />
+        <GeistProvider>
+          <CssBaseline />
+          <Component {...pageProps} />
+        </GeistProvider>
       </Provider>
     </SWRConfig>
   );

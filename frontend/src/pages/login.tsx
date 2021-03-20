@@ -1,3 +1,4 @@
+import { Button } from '@geist-ui/react';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { login, logout, selectAuth } from '../features/auth/authSlice';
 
@@ -9,11 +10,11 @@ export default function Login() {
       {!isAuthenticated && (
         <>
           <h1>hello!</h1>
-          <button onClick={() => dispatch(login('random-token'))}>login</button>
+          <Button onClick={() => dispatch(login('random-token'))}>login</Button>
         </>
       )}
       {isAuthenticated && (
-        <button onClick={() => dispatch(logout())}>logout</button>
+        <Button onClick={() => dispatch(logout())}>logout</Button>
       )}
     </div>
   );
