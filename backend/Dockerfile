@@ -1,47 +1,28 @@
-FROM python:3.9.2-slim as python-base
-ENV PYTHONUNBUFFERED=1 \
-    PYTHONDONTWRITEBYTECODE=1 \
-    PIP_NO_CACHE_DIR=off \
-    PIP_DISABLE_PIP_VERSION_CHECK=on \
-    PIP_DEFAULT_TIMEOUT=100 \
-    POETRY_HOME="/opt/poetry" \
-    POETRY_VIRTUALENVS_IN_PROJECT=true \
-    POETRY_NO_INTERACTION=1 \
-    PYSETUP_PATH="/opt/pysetup" \
-    VENV_PATH="/opt/pysetup/.venv"
+# pull official base image
+FROM python:3.8.3-alpine
 
-ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
+# set work directory
+WORKDIR /usr/src/app
 
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONBUFFERED 1
 
-# builder-base is used to build dependencies
-FROM python-base as builder-base
-RUN apt-get update \
-    && apt-get install --no-install-recommends -y \
-        curl \
-        build-essential
+# install psycopg2 dependencies
+RUN apk update \
+    && apk add postgresql-dev gcc python3-dev musl-dev
 
-# Install Poetry - respects $POETRY_VERSION & $POETRY_HOME
-ENV POETRY_VERSION=1.1.5
-RUN curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+# install dependencies
+RUN pip install --upgrade pip
+COPY ./requirements.txt .
+RUN pip install -r requirements.txt
 
-# We copy our Python requirements here to cache them
-# and install only runtime deps using poetry
-WORKDIR $PYSETUP_PATH
-COPY ./poetry.lock ./pyproject.toml ./
-RUN poetry install --no-dev  # respects 
+# copy entrypoint.sh
+COPY ./entrypoint.sh .
 
-ENV PROJECT_NAME=kindred
-
-WORKDIR /app
-
-RUN mkdir -p /logs/gunicorn
-
-RUN groupadd app && useradd --create-home -g app -ms /bin/bash app
-
-RUN python --version
-
+# copy project
 COPY . .
 
-EXPOSE 8000
+# run entrypoint.sh
+ENTRYPOINT [ "/usr/src/app/entrypoint.sh" ]
 
-CMD ["sh", "start.sh"]
