@@ -1,7 +1,5 @@
-import uuid
-
 from common.serializers import InviteCodeSerializer
-from django.shortcuts import render
+from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
 from posts.serializers import PostSerializer
 from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import action
@@ -30,7 +28,7 @@ class CommunityViewSet(viewsets.ModelViewSet):
                 community = Community.objects.get(
                     invite_code=serializer.validated_data["invite_code"]
                 )
-            except:
+            except (ObjectDoesNotExist, MultipleObjectsReturned):
                 return Response(
                     {"error": "Invite code doesn't match."},
                     status=status.HTTP_400_BAD_REQUEST,
