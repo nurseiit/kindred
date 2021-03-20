@@ -15,3 +15,12 @@ Dependencies are managed via [Poetry](https://python-poetry.org). Run the follow
 ```bash
 poetry export -f requirements.txt --output requirements.txt
 ```
+
+
+## Deployment
+
+Run the following command to deploy the project in the production environment:
+
+```bash
+docker-compose -f docker-compose.prod.yml up -d --build
+```

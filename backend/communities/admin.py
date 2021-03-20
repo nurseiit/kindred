@@ -8,12 +8,8 @@ class CommunityAdmin(admin.ModelAdmin):
     list_display = (
         "name",
         "description",
-        "number_of_users",
         "invite_code",
         "created_at",
         "updated_at",
     )
-    readonly_fields = (
-        "number_of_users",
-        "invite_code",
-    )
+    readonly_fields = ("invite_code",)

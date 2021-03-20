@@ -1,3 +1,4 @@
+from communities.serializers import CommunitySerializer
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from posts.serializers import PostSerializer
@@ -8,6 +9,7 @@ User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
     posts = PostSerializer(many=True)
+    communities = CommunitySerializer(many=True)
 
     class Meta:
         model = User
@@ -19,6 +21,7 @@ class UserSerializer(serializers.ModelSerializer):
             "date_joined",
             "groups",
             "posts",
+            "communities",
         ]
 
 
