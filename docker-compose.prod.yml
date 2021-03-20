@@ -23,16 +23,21 @@ services:
 
   nginx:
     build: ./nginx
+    restart: always
     volumes:
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
+      - letsencrypt:/etc/letsencrypt
     ports:
       - 80:80/tcp
       - 443:443/tcp
     depends_on:
       - web
+    environment:
+      CERTBOT_EMAIL: nurs@tuta.io
 
 volumes:
   postgres_data:
   static_volume:
   media_volume:
+  letsencrypt:
