@@ -1,22 +1,16 @@
-import styled from 'styled-components';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { selectAuth } from '../features/auth/authSlice';
-import { decrement, increment } from '../features/counter/counterSlice';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
-const Span = styled.span`
-  color: violet;
-`;
+import { useAppSelector } from '../app/hooks';
+import { selectAuth } from '../features/auth/authSlice';
 
 export default function Index() {
-  const count = useAppSelector((state) => state.counter.value);
   const { isAuthenticated } = useAppSelector(selectAuth);
-  const dispatch = useAppDispatch();
-  return (
-    <div>
-      <h1>{isAuthenticated ? 'Helloo!' : 'please login'}</h1>
-      <Span>{count}</Span>
-      <button onClick={() => dispatch(increment())}>+</button>
-      <button onClick={() => dispatch(decrement())}>-</button>
-    </div>
-  );
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isAuthenticated) router.push('/login');
+  }, [isAuthenticated]);
+
+  return <div>hello</div>;
 }
