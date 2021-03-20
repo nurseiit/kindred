@@ -1,6 +1,8 @@
-import { Spacer } from '@geist-ui/react';
+import { Popover, Spacer, Link } from '@geist-ui/react';
 import { Notifications, Search } from '@styled-icons/ionicons-outline';
 import styled from 'styled-components';
+import { useAppDispatch } from '../../app/hooks';
+import { logout } from '../../features/auth/authSlice';
 import { Emoji } from '../emoji';
 
 const Wrapper = styled.div`
@@ -25,6 +27,14 @@ const ProfilePhoto = styled.div`
   align-items: center;
   justify-content: center;
 
+  cursor: pointer;
+
+  transition: all 0.2s ease 0s;
+
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 7px;
+  }
+
   font-size: 22px;
   width: 30px;
 
@@ -32,9 +42,35 @@ const ProfilePhoto = styled.div`
   min-width: 35px;
   background-color: var(--success-0);
   border-radius: 50%;
-
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px;
 `;
+
+const PopoverWrapper = styled.div`
+  width: 200px;
+`;
+
+const ProfilePopoverContent = () => {
+  const dispatch = useAppDispatch();
+  return (
+    <PopoverWrapper>
+      <Popover.Item title>
+        <span>Morgan Freeman</span>
+      </Popover.Item>
+      <Popover.Item>
+        <Link href="#">Profile</Link>
+      </Popover.Item>
+      <Popover.Item>
+        <Link href="#">My posts</Link>
+      </Popover.Item>
+      <Popover.Item line />
+      <Popover.Item>
+        <Link href="#" onClick={() => dispatch(logout())}>
+          Log out
+        </Link>
+      </Popover.Item>
+    </PopoverWrapper>
+  );
+};
 
 export const Top = () => (
   <Wrapper>
@@ -48,6 +84,8 @@ export const Top = () => (
     <Spacer x={0.8} />
     <Border />
     <Spacer x={0.8} />
-    <ProfilePhoto>🦸🏻‍♀️</ProfilePhoto>
+    <Popover content={ProfilePopoverContent} placement="bottomEnd">
+      <ProfilePhoto>🦸🏻‍♀️</ProfilePhoto>
+    </Popover>
   </Wrapper>
 );
