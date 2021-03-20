@@ -1,4 +1,5 @@
-FROM nginx:1.19.0-alpine
+FROM staticfloat/nginx-certbot
 
-RUN rm /etc/nginx/conf.d/default.conf
-COPY nginx.conf /etc/nginx/conf.d
+COPY ./conf.d/*.conf /etc/nginx/user.conf.d/
+
+CMD ["/bin/bash", "/scripts/entrypoint.sh"]
