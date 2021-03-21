@@ -6,10 +6,12 @@ import {
   Home,
   Image,
   Settings,
-  Star,
 } from '@styled-icons/ionicons-outline';
 import { UnfoldMore } from '@styled-icons/material-rounded';
 import { Emoji } from '../emoji';
+import { useAppSelector } from '../../app/hooks';
+import { selectUser } from '../../features/user/userSlice';
+import { Loading } from '@geist-ui/react';
 
 const OptionsWrapper = styled.header`
   position: sticky;
@@ -172,19 +174,22 @@ const GroupTitle = styled.p`
   padding: 0;
 `;
 
-export const Header: FC = () => (
-  <OptionsWrapper>
-    <LogoWrapper>
-      <Logo /> Kindred
-    </LogoWrapper>
-    <GroupsWrapper>
-      <Emoji isRoundedWhiteBg>😍</Emoji>
-      <GroupTitleWrapper>
-        <GroupTitle>Almanov Family</GroupTitle>
-        this kindred
-      </GroupTitleWrapper>
-      <UnfoldMore className="icon" height={22} width={22} />
-    </GroupsWrapper>
-    <NavLinks />
-  </OptionsWrapper>
-);
+export const Header: FC = () => {
+  const { currentCommunity } = useAppSelector(selectUser);
+  return (
+    <OptionsWrapper>
+      <LogoWrapper>
+        <Logo /> Kindred
+      </LogoWrapper>
+      <GroupsWrapper>
+        <Emoji isRoundedWhiteBg>😍</Emoji>
+        <GroupTitleWrapper>
+          <GroupTitle>{currentCommunity?.name || <Loading />}</GroupTitle>
+          this kindred
+        </GroupTitleWrapper>
+        <UnfoldMore className="icon" height={22} width={22} />
+      </GroupsWrapper>
+      <NavLinks />
+    </OptionsWrapper>
+  );
+};
