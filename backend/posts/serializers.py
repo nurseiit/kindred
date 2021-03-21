@@ -6,6 +6,7 @@ from .models import Post
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        exclude = [
+        fields = "__all__"
+        read_only_fields = [
             "user",
         ]
