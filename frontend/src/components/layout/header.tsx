@@ -13,7 +13,6 @@ import { UnfoldMore } from '@styled-icons/material-rounded';
 import { Emoji } from '../emoji';
 import { useAppSelector } from '../../app/hooks';
 import { selectUser } from '../../features/user/userSlice';
-import { Loading } from '@geist-ui/react';
 
 const OptionsWrapper = styled.header`
   position: sticky;
@@ -195,7 +194,7 @@ export const Header: FC<{ selected: string }> = ({ selected }) => {
       <GroupsWrapper>
         <Emoji isRoundedWhiteBg>😍</Emoji>
         <GroupTitleWrapper>
-          <GroupTitle>{currentCommunity?.name || <Loading />}</GroupTitle>
+          <GroupTitle>{currentCommunity?.name || 'Waiting List'}</GroupTitle>
           this kindred
         </GroupTitleWrapper>
         <UnfoldMore className="icon" height={22} width={22} />

@@ -65,6 +65,9 @@ export const userSlice = createSlice({
       state.eventsRequest.error = null;
       state.events = action.payload;
     },
+    removeUser: (state) => {
+      state.user = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(requestUser.pending, (state) => {
@@ -86,7 +89,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const { loadUser, loadEvents } = userSlice.actions;
+export const { loadUser, loadEvents, removeUser } = userSlice.actions;
 
 export const selectUser = (state: RootState) => state.user;
 

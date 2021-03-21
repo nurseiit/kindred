@@ -12,3 +12,4 @@ export const PROFILE_URL = '/profile/';
 export const POSTS_URL = '/posts/';
 export const EVENTS_URL = '/events/';
 export const COMMUNITY_POSTS_URL = (id: number) => `/communities/${id}/posts/`;
+export const REGISTER_URL = '/auth/register/';

@@ -1,9 +1,14 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import { Header } from './header';
 
-const Wrapper = styled.div`
-  display: flex;
+import { useAppSelector } from '../../app/hooks';
+import { selectAuth } from '../../features/auth/authSlice';
+import { Header } from './header';
+import { Loading } from '@geist-ui/react';
+
+const Wrapper = styled.div<{ rendered: boolean }>`
+  display: ${({ rendered }) => (rendered ? 'flex' : 'none')};
 `;
 
 const MainWrapper = styled.div`
@@ -14,10 +19,22 @@ const MainWrapper = styled.div`
 `;
 
 export const Layout: FC<{ selected: string }> = ({ children, selected }) => {
+  const { isAuthenticated } = useAppSelector(selectAuth);
+  const router = useRouter();
+  const [rendered, setRendered] = useState(false);
+
+  useEffect(() => {
+    if (!isAuthenticated) router.push('/signup');
+    else setRendered(true);
+  }, [isAuthenticated]);
+
   return (
-    <Wrapper>
-      <Header selected={selected} />
-      <MainWrapper>{children}</MainWrapper>
-    </Wrapper>
+    <>
+      {!rendered && <Loading size="large" />}
+      <Wrapper rendered={rendered}>
+        <Header selected={selected} />
+        <MainWrapper>{children}</MainWrapper>
+      </Wrapper>
+    </>
   );
 };

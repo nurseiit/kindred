@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { useAppDispatch } from '../../app/hooks';
 import { logout } from '../../features/auth/authSlice';
+import { removeUser } from '../../features/user/userSlice';
 import { useUser } from '../../utils';
 import { Emoji } from '../emoji';
 
@@ -67,7 +68,13 @@ export const Top = () => {
       </Popover.Item>
       <Popover.Item line />
       <Popover.Item>
-        <span style={{ cursor: 'pointer' }} onClick={() => dispatch(logout())}>
+        <span
+          style={{ cursor: 'pointer' }}
+          onClick={() => {
+            dispatch(logout());
+            dispatch(removeUser());
+          }}
+        >
           Log out
         </span>
       </Popover.Item>

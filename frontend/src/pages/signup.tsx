@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { Button, Input } from '@geist-ui/react';
+import { Button, Input, useToasts } from '@geist-ui/react';
 import styled from 'styled-components';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { requestLogin, selectAuth } from '../features/auth/authSlice';
+import { requestRegister, selectAuth } from '../features/auth/authSlice';
 
 const Wrapper = styled.div`
   height: calc(100vh - 150px);
@@ -58,15 +58,28 @@ export default function Login() {
   const router = useRouter();
   const {
     isAuthenticated,
-    loginRequest: { isLoading },
+    registerRequest: { isLoading, error },
   } = useAppSelector(selectAuth);
   const dispatch = useAppDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+
+  const [, setToast] = useToasts();
 
   useEffect(() => {
     if (isAuthenticated) router.push('/');
   }, [isAuthenticated]);
+
+  const onSuccess = () => {
+    setToast({
+      type: 'success',
+      text: 'Signed up! Please login now.',
+      delay: 3000,
+    });
+    router.push('/login');
+  };
 
   return (
     <div
@@ -83,38 +96,61 @@ export default function Login() {
           are here!
         </Title>
         <Desc>[noun] one&apos;s family and relations.</Desc>
-
+        Access to Kindred is by invitation only. Sign up below to join our
+        waitlist. If you have an invitation code, you can enter in the next
+        step.
         <InnerWrapper>
+          <Input
+            className="input"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            placeholder="Enter your first name"
+          ></Input>
+          <Input
+            className="input"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            placeholder="Enter your last name"
+          ></Input>
           <Input
             className="input"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email"
-          >
-            Email address
-          </Input>
+          ></Input>
           <Input.Password
             className="input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter your password"
-          >
-            Password
-          </Input.Password>
+          ></Input.Password>
           <Button
             className="button"
             loading={isLoading}
             auto
             type="secondary"
             size="small"
-            onClick={() => dispatch(requestLogin({ email, password }))}
+            onClick={() =>
+              dispatch(
+                requestRegister({
+                  registerData: {
+                    email,
+                    password,
+                    first_name: firstName,
+                    last_name: lastName,
+                  },
+                  cb: onSuccess,
+                })
+              )
+            }
           >
-            login
+            sign up
           </Button>
         </InnerWrapper>
-        <Link href="/signup">
-          <Desc as="a" href="/signup" style={{ marginTop: 70, fontSize: 14 }}>
-            Do not have an account?
+        {error && <span style={{ color: 'red' }}>{JSON.stringify(error)}</span>}
+        <Link href="/login">
+          <Desc as="a" href="/login" style={{ marginTop: 70, fontSize: 14 }}>
+            Already have an account?
           </Desc>
         </Link>
       </Wrapper>
