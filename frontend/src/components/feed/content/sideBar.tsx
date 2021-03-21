@@ -15,8 +15,6 @@ const Card = styled.div`
   padding: 18px;
   border-radius: 12px;
 
-  height: 310px;
-
   margin-bottom: 18px;
 `;
 
@@ -120,12 +118,12 @@ export const SideBar = () => {
   }, []);
 
   return (
-    <>
+    <div>
       {isLoading ? (
         <Loading />
       ) : (
         events.map((event) => <Event key={`event-${event.id}`} event={event} />)
       )}
-    </>
+    </div>
   );
 };
