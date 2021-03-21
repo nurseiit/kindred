@@ -1,7 +1,4 @@
 import axios from 'axios';
-import store from '../app/store';
-import { logout } from '../features/auth/authSlice';
-import { removeUser } from '../features/user/userSlice';
 import { getTokens } from '../utils';
 import { API_BASE_URL } from './constants';
 
@@ -26,8 +23,6 @@ api.interceptors.response.use(
   (error) => {
     if (error.response.status === 401) {
       // todo refresh
-      store.dispatch(logout());
-      store.dispatch(removeUser());
     }
     return Promise.reject(error);
   }
