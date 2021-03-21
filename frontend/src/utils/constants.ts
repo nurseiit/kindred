@@ -10,4 +10,5 @@ export const TOKEN_COOKIE_NAME = 'kindred-token';
 export const LOGIN_URL = '/auth/login/';
 export const PROFILE_URL = '/profile/';
 export const POSTS_URL = '/posts/';
+export const EVENTS_URL = '/events/';
 export const COMMUNITY_POSTS_URL = (id: number) => `/communities/${id}/posts/`;
