@@ -1,4 +1,4 @@
-import { Popover, Spacer, Link } from '@geist-ui/react';
+import { Popover, Spacer, Link, Badge } from '@geist-ui/react';
 import { Notifications, Search } from '@styled-icons/ionicons-outline';
 import styled from 'styled-components';
 
@@ -71,15 +71,33 @@ export const Top = () => {
       </Popover.Item>
     </PopoverWrapper>
   );
+
+  const notificationContent = () => (
+    <PopoverWrapper>
+      <Popover.Item title>
+        <span>Welcome to Kindred, {user?.first_name}!</span>
+      </Popover.Item>
+    </PopoverWrapper>
+  );
+
   return (
     <Wrapper>
       <Emoji isRoundedWhiteBg withShadow>
         <Search className="icon" width={20} height={20} />
       </Emoji>
       <Spacer x={0.8} />
-      <Emoji isRoundedWhiteBg withShadow>
-        <Notifications className="icon" width={20} height={20} />
-      </Emoji>
+      <Popover
+        content={notificationContent}
+        placement="bottomEnd"
+        style={{ cursor: 'pointer' }}
+      >
+        <Emoji isRoundedWhiteBg withShadow>
+          <Badge.Anchor>
+            <Badge size="large" type="error" dot />
+            <Notifications className="icon" width={20} height={20} />
+          </Badge.Anchor>
+        </Emoji>
+      </Popover>
       <Spacer x={0.8} />
       <Border />
       <Spacer x={0.8} />
