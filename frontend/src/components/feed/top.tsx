@@ -24,7 +24,7 @@ const Border = styled.div`
   border-right: 1px solid var(--accent-1);
 `;
 
-const ProfilePhoto = styled.div`
+export const ProfilePhoto = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;

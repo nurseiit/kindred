@@ -1,12 +1,24 @@
 import { useEffect, useState } from 'react';
-import { Button, Textarea, useToasts } from '@geist-ui/react';
-import { Image, Send, Videocam } from '@styled-icons/ionicons-outline';
+import { Button, Loading, Textarea, useToasts } from '@geist-ui/react';
+import {
+  Chatbox,
+  Heart,
+  Image,
+  Send,
+  Videocam,
+} from '@styled-icons/ionicons-outline';
 import styled from 'styled-components';
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { createPost, selectPost } from '../../../features/post/postSlice';
+import {
+  createPost,
+  getCommunityPosts,
+  selectPost,
+} from '../../../features/post/postSlice';
 import { selectUser } from '../../../features/user/userSlice';
 import { Emoji } from '../../emoji';
+import { ProfilePhoto } from '../top';
+import { IPost } from '../../../types';
 
 const Wrapper = styled.div`
   display: flex;
@@ -23,6 +35,8 @@ const Card = styled.div`
   background-color: white;
   padding: 18px;
   border-radius: 12px;
+
+  margin-bottom: 18px;
 `;
 
 const Title = styled.h3`
@@ -164,8 +178,97 @@ const CreatePost = () => {
   );
 };
 
-export const Main = () => (
-  <Wrapper>
-    <CreatePost />
-  </Wrapper>
-);
+const UserWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 18px;
+`;
+
+const UsernameWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Username = styled.span`
+  font-size: 15px;
+  font-weight: 500;
+`;
+
+const Info = styled.span`
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--accent-3);
+`;
+
+const ReactionsWrapper = styled.div`
+  display: flex;
+  align-items: center;
+
+  margin-top: 12px;
+`;
+
+const Reaction = styled.div`
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+  color: var(--accent-5);
+
+  font-size: 13px;
+  margin-right: 12px;
+`;
+
+const Post = ({ post }: { post: IPost }) => {
+  const description = post.description;
+  const username = 'Alina Gagarina';
+  const info = '5 mins ago';
+  return (
+    <Card>
+      <UserWrapper>
+        <ProfilePhoto style={{ marginRight: 16 }}>🧑‍🚀</ProfilePhoto>
+        <UsernameWrapper>
+          <Username>{username}</Username>
+          <Info>{info}</Info>
+        </UsernameWrapper>
+      </UserWrapper>
+      <TextCard>
+        <Emoji isRoundedWhiteBg>👋</Emoji>
+        <span style={{ marginLeft: '18px', fontSize: 14 }}>{description}</span>
+      </TextCard>
+      <ReactionsWrapper>
+        <Reaction>
+          <Heart width={20} height={20} style={{ marginRight: 8 }} /> 0 Likes
+        </Reaction>
+        <Reaction>
+          <Chatbox width={20} height={20} style={{ marginRight: 8 }} /> 0
+          Comments
+        </Reaction>
+      </ReactionsWrapper>
+    </Card>
+  );
+};
+
+export const Main = () => {
+  const {
+    posts,
+    postRequest: { isLoading },
+  } = useAppSelector(selectPost);
+  const { currentCommunity } = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if ((!posts || !posts.length) && !isLoading)
+      dispatch(getCommunityPosts(currentCommunity?.id || 0));
+  }, []);
+
+  return (
+    <Wrapper>
+      <CreatePost />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        posts.map((post) => <Post key={`post-${post.id}`} post={post} />)
+      )}
+    </Wrapper>
+  );
+};

@@ -167,7 +167,7 @@ const GroupTitleWrapper = styled.div`
   font-size: 12px;
 `;
 
-const GroupTitle = styled.p`
+const GroupTitle = styled.span`
   font-weight: 600;
   font-size: 14px;
   margin: 0;

@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from '../../app/store';
 import { IPost } from '../../types';
-import { api, POSTS_URL } from '../../utils';
+import { api, COMMUNITY_POSTS_URL, POSTS_URL } from '../../utils';
 
 interface postState {
   isLoading: boolean;
@@ -30,11 +30,11 @@ const initialState: postState = {
   },
 };
 
-export const getPosts = createAsyncThunk(
-  'post/getPosts',
-  async (_, thunkApi) => {
-    const response = await api.get(POSTS_URL);
-    thunkApi.dispatch(loadPosts(response.data));
+export const getCommunityPosts = createAsyncThunk(
+  'post/getCommunityPosts',
+  async (communityId: number, thunkApi) => {
+    const response = await api.get(COMMUNITY_POSTS_URL(communityId));
+    thunkApi.dispatch(loadPosts(response.data.reverse()));
   }
 );
 
@@ -51,7 +51,7 @@ export const createPost = createAsyncThunk(
       community,
     });
     cb?.();
-    thunkApi.dispatch(getPosts());
+    thunkApi.dispatch(getCommunityPosts(community));
   }
 );
 
@@ -66,11 +66,11 @@ export const postSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getPosts.pending, (state) => {
+    builder.addCase(getCommunityPosts.pending, (state) => {
       state.postRequest.isLoading = true;
       state.postRequest.error = null;
     });
-    builder.addCase(getPosts.rejected, (state, action) => {
+    builder.addCase(getCommunityPosts.rejected, (state, action) => {
       state.postRequest.isLoading = false;
       state.postRequest.error = action.error;
     });
