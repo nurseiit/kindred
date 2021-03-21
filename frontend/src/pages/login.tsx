@@ -76,7 +76,12 @@ export default function Login() {
         textAlign: 'justify',
       }}
     >
-      <div style={{ backgroundColor: 'var(--bg-1)' }}></div>
+      <div
+        style={{
+          backgroundImage: 'url(/bg.png)',
+          backgroundPosition: 'center',
+        }}
+      ></div>
       <Wrapper>
         <Title>
           All of your kindred <em style={{ fontWeight: 300 }}>/ˈkindrid/</em>{' '}
