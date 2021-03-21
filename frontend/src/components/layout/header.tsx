@@ -17,7 +17,7 @@ const OptionsWrapper = styled.header`
   position: sticky;
   top: 0;
 
-  width: 220px;
+  min-width: 230px;
   padding: 24px 18px;
 
   height: 100%;

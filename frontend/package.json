@@ -19,6 +19,7 @@
     "@styled-icons/ionicons-outline": "^10.28.0",
     "@styled-icons/material-rounded": "^10.28.0",
     "axios": "^0.21.1",
+    "date-fns": "^2.19.0",
     "js-cookie": "^2.2.1",
     "next": "^10.0.9",
     "react": "^17.0.1",

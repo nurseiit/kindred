@@ -8,6 +8,7 @@ import {
   Videocam,
 } from '@styled-icons/ionicons-outline';
 import styled from 'styled-components';
+import { formatDistance } from 'date-fns';
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import {
@@ -221,7 +222,7 @@ const Reaction = styled.div`
 const Post = ({ post }: { post: IPost }) => {
   const description = post.description;
   const username = 'Alina Gagarina';
-  const info = '5 mins ago';
+  const info = formatDistance(new Date(post.created_at), new Date()) + ' ago';
   return (
     <Card>
       <UserWrapper>
