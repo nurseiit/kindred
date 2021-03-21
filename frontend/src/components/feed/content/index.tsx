@@ -11,6 +11,8 @@ const Wrapper = styled.div`
 export const Content = () => (
   <Wrapper>
     <Main />
-    <SideBar />
+    <div>
+      <SideBar />
+    </div>
   </Wrapper>
 );

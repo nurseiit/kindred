@@ -118,12 +118,12 @@ export const SideBar = () => {
   }, []);
 
   return (
-    <div>
+    <>
       {isLoading ? (
         <Loading />
       ) : (
         events.map((event) => <Event key={`event-${event.id}`} event={event} />)
       )}
-    </div>
+    </>
   );
 };

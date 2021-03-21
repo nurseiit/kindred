@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import styled from 'styled-components';
+import Link from 'next/link';
 
 import {
   Calendar,
@@ -8,6 +9,7 @@ import {
   Settings,
 } from '@styled-icons/ionicons-outline';
 import { UnfoldMore } from '@styled-icons/material-rounded';
+
 import { Emoji } from '../emoji';
 import { useAppSelector } from '../../app/hooks';
 import { selectUser } from '../../features/user/userSlice';
@@ -103,24 +105,33 @@ type LinkType = {
   text: string;
   selected?: boolean;
   icon: typeof Home;
+  link: string;
 };
 
 const AllLinks: LinkType[] = [
-  { text: 'Feed', selected: true, icon: Home },
-  { text: 'Events', icon: Calendar },
-  { text: 'Photo Gallery', icon: Image },
-  { text: 'Settings', icon: Settings },
+  { text: 'Feed', icon: Home, link: '' },
+  { text: 'Events', icon: Calendar, link: 'events' },
+  { text: 'Photo Gallery', icon: Image, link: 'gallery' },
+  { text: 'Settings', icon: Settings, link: 'settings' },
 ];
 
-const NavLinks: FC = () => (
+const NavLinks: FC<{ selected: string }> = ({ selected }) => (
   <div>
-    {AllLinks.map(({ text, selected, icon: LinkIcon }, idx) => (
-      <NavLink selected={selected} key={`${text}-${idx}`}>
-        <IconWrapper>
-          <LinkIcon className="icon" height={22} width={22} />
-        </IconWrapper>
-        {text}
-      </NavLink>
+    {AllLinks.map(({ text, icon: LinkIcon, link }, idx) => (
+      <Link href={`/${link}`} key={`${text}-${idx}`}>
+        <NavLink
+          href=""
+          selected={
+            selected.toLowerCase() === text.toLowerCase() ||
+            selected.toLowerCase() === link.toLowerCase()
+          }
+        >
+          <IconWrapper>
+            <LinkIcon className="icon" height={22} width={22} />
+          </IconWrapper>
+          {text}
+        </NavLink>
+      </Link>
     ))}
   </div>
 );
@@ -174,7 +185,7 @@ const GroupTitle = styled.span`
   padding: 0;
 `;
 
-export const Header: FC = () => {
+export const Header: FC<{ selected: string }> = ({ selected }) => {
   const { currentCommunity } = useAppSelector(selectUser);
   return (
     <OptionsWrapper>
@@ -189,7 +200,7 @@ export const Header: FC = () => {
         </GroupTitleWrapper>
         <UnfoldMore className="icon" height={22} width={22} />
       </GroupsWrapper>
-      <NavLinks />
+      <NavLinks selected={selected} />
     </OptionsWrapper>
   );
 };

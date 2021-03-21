@@ -13,10 +13,10 @@ const MainWrapper = styled.div`
   padding: 20px 20px;
 `;
 
-export const Layout: FC = ({ children }) => {
+export const Layout: FC<{ selected: string }> = ({ children, selected }) => {
   return (
     <Wrapper>
-      <Header />
+      <Header selected={selected} />
       <MainWrapper>{children}</MainWrapper>
     </Wrapper>
   );

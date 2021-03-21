@@ -4,7 +4,15 @@ import { useRouter } from 'next/router';
 import { useAppSelector } from '../app/hooks';
 import { selectAuth } from '../features/auth/authSlice';
 
-import { Feed, Layout } from '../components';
+import { Layout } from '../components';
+import { SideBar } from '../components/feed/content/sideBar';
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+  & > div {
+    width: 40%;
+  }
+`;
 
 export default function Index() {
   const { isAuthenticated } = useAppSelector(selectAuth);
@@ -15,8 +23,10 @@ export default function Index() {
   }, [isAuthenticated]);
 
   return (
-    <Layout selected="feed">
-      <Feed />
+    <Layout selected="events">
+      <Wrapper>
+        <SideBar />
+      </Wrapper>
     </Layout>
   );
 }
