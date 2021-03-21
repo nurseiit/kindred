@@ -18,6 +18,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+from events.views import EventViewSet
 from posts.views import PostViewSet
 from rest_framework import routers
 from users.views import GroupViewSet, ProfileView, UserViewSet
@@ -27,11 +28,12 @@ router.register(r"users", UserViewSet)
 router.register(r"groups", GroupViewSet)
 router.register(r"posts", PostViewSet)
 router.register(r"communities", CommunityViewSet)
+router.register(r"events", EventViewSet)
 
 
 urlpatterns = [
     # TODO: in production comment the below
-    path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
+    # path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     path("admin/", admin.site.urls),
     path("", include(router.urls)),
     path("auth/", include("auth.urls")),

@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "users",
     "posts",
     "communities",
+    "events",
     # external apps
     "rest_framework",
     "corsheaders",
