@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Button, Loading, Textarea, useToasts } from '@geist-ui/react';
 import {
+  Calendar,
   Chatbox,
   Heart,
   Image,
@@ -163,6 +164,11 @@ const CreatePost = () => {
           <ActionButton>
             <Videocam height={18} width={18} className="action-icon" />
             Video
+          </ActionButton>
+          <Divider />
+          <ActionButton>
+            <Calendar height={18} width={18} className="action-icon" />
+            Event
           </ActionButton>
         </div>
         <Button
