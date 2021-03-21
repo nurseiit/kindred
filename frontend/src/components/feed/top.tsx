@@ -67,7 +67,9 @@ export const Top = () => {
       </Popover.Item>
       <Popover.Item line />
       <Popover.Item>
-        <span onClick={() => dispatch(logout())}>Log out</span>
+        <span style={{ cursor: 'pointer' }} onClick={() => dispatch(logout())}>
+          Log out
+        </span>
       </Popover.Item>
     </PopoverWrapper>
   );

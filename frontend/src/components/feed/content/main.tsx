@@ -20,6 +20,7 @@ import { selectUser } from '../../../features/user/userSlice';
 import { Emoji } from '../../emoji';
 import { ProfilePhoto } from '../top';
 import { IPost } from '../../../types';
+import { useUser } from '../../../utils';
 
 const Wrapper = styled.div`
   display: flex;
@@ -220,13 +221,19 @@ const Reaction = styled.div`
 `;
 
 const Post = ({ post }: { post: IPost }) => {
+  const { user } = useUser();
   const description = post.description;
-  const username = 'Alina Gagarina';
+  const username =
+    post.user !== user?.id
+      ? 'Alina Gagarina'
+      : [user?.first_name, user?.last_name].join(' ');
   const info = formatDistance(new Date(post.created_at), new Date()) + ' ago';
   return (
     <Card>
       <UserWrapper>
-        <ProfilePhoto style={{ marginRight: 16 }}>🧑‍🚀</ProfilePhoto>
+        <ProfilePhoto style={{ marginRight: 16 }}>
+          {post.user !== user?.id ? '🧑‍🚀' : '🦸🏻‍♀️'}
+        </ProfilePhoto>
         <UsernameWrapper>
           <Username>{username}</Username>
           <Info>{info}</Info>

@@ -4,4 +4,5 @@ export type IPost = {
   updated_at: string;
   title: string;
   description: string;
+  user: number;
 };
